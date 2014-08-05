@@ -6,8 +6,8 @@
     - vars/defaults.yml
 
   roles:
-    #- mysql
-    - ruby-common # currently configure at ruby2.0-dev
+    - mysql
+    - ruby-common
     - chruby
     - rails
     - nginx-puma

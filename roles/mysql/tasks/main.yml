@@ -1,4 +1,3 @@
-# Based from https://github.com/bennojoy/mysql
 - name: Install mysql dependencies
   action: apt pkg={{item}} state=latest
   with_items:

@@ -1,23 +1,25 @@
-# Based from https://github.com/dodecaphonic/ansible-rails-app
+ssh-keyscan staging.steponehealth.com >> ~/.ssh/known_hosts
 
-# A small Rails server playbook for Ansible
-It installs:
+# If you are running OSX, you need to do this:
+# http://thornelabs.net/2014/02/09/ansible-os-x-mavericks-you-must-install-the-sshpass-program.html
+# ansible-playbook -i hosts create-user.yml --user root --ask-pass
 
-- Ruby 2.1
-- mysql (or postgresql)
-- nginx
-- Puma (jungle)
 
-1. Change the app name and deploy directory in <code>vars/defaults.yml</code>.
-2. Rename `hosts.example` to `hosts` and change it to your hosts.
+# Assuming you still need to upload ssh key to the server and you have the root password
+scp ~/.ssh/id_rsa.pub root@staging.steponehealth.com:~/uploaded_key.pub
+ssh root@staging.steponehealth.com
+mkdir -m og-rwx .ssh
+cat ~/uploaded_key.pub >> ~/.ssh/authorized_keys
 
-To run:
 
-    $ ansible-playbook -i hosts app.yml --private-key ~/.ssh/privkey
+# Create the user. We will not use root after this
+ansible-playbook -i hosts create-user.yml --user root
 
-    $ ansible-playbook -i hosts app.yml -t ruby,deploy,postgresql,nginx
-    $ <deploy your app>
-    $ ansible-playbook -i hosts ruby-webapp.yml -t puma
+ansible-playbook -i hosts bootstrap.yml
 
-There is an example Capistrano `deploy.rb` in this repository that you can use too.
+Sources:
 
+https://github.com/dodecaphonic/ansible-rails-app
+https://github.com/jgrowl/ansible-playbook-ruby-from-src
+https://github.com/bennojoy/mysql
+http://thornelabs.net/2014/03/08/install-ansible-create-your-inventory-file-and-run-an-ansible-playbook-and-some-ansible-commands.html
