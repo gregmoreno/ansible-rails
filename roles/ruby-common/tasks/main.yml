@@ -22,7 +22,7 @@
     - libsqlite3-dev
     - libxml2-dev
     - libxslt1-dev
-    - ruby2.0-dev
+    - ruby{{ ruby_dev_version }}-dev
     - curl
 
 - name: Install app dependencies

@@ -10,7 +10,7 @@
   command: make install chdir={{ ruby_install_src_path }} creates=/usr/local/bin/ruby-install
 
 - name: Install ruby
-  command: ruby-install --rubies-dir {{ rubies_dir }} ruby {{ ruby_version }} crerates={{ rubies_dir}}/ruby-{{ ruby-version }}
+  command: ruby-install --rubies-dir {{ rubies_dir }} ruby {{ ruby_version }} creates={{ rubies_dir}}/ruby-{{ ruby_version }}
 
 - name: Download chruby src archive
   get_url: url={{ chruby_url }}
