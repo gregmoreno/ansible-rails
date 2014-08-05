@@ -5,7 +5,6 @@
     - python-selinux
     - mysql-server
     - python-mysqldb
-      #- libmysqlclient-dev
 
 - name: Copy the my.cnf file
   template: src=my.cnf.j2 dest={{ mysql_conf_dir }}/my.cnf

@@ -1,0 +1,21 @@
+---
+- name: chruby-from-src
+  get_url: url={{ chruby_url }}
+           dest={{ chruby_file }}
+           force=no
+
+- name: chruby-unpack
+  command: tar -xzf {{ chruby_file }} chdir={{ app_tmp_dir }} creates={{ chruby_tmp_path }}
+
+- name: chruby-install
+  command: make install chdir={{ chruby_tmp_path }} creates=/usr/local/share/chruby/chruby.sh
+
+- name: profile.d {{chruby_version}}
+  template: src=chruby.sh
+            dest=/etc/profile.d/chruby.sh
+            owner=root
+            group=root
+            mode=755
+
+- name: Install Bundler
+  command: bash -lc 'gem install bundler --no-rdoc --no-ri'

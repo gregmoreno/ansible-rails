@@ -6,12 +6,12 @@
   template: src=etc_puma.conf.j2 dest=/etc/puma.conf force=yes mode=755
   tags: puma
 
-- name: Add puma init script
+- name: Add puma init scrinitp
   template: src=etc_init_puma.j2 dest=/etc/init/puma.conf force=yes mode=755
   tags: puma
 
 - name: Add puma shared/config
-  template: src=puma_production.j2 dest={{deploy_directory}}/shared/config/puma/production.rb force=yes mode=755
+  template: src=puma.rb.j2 dest={{deploy_directory}}/shared/config/puma.rb force=yes mode=755 owner=deploy group=deploy
   tags: puma
 
 - name: Make shared/tmp/sockets

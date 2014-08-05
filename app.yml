@@ -1,15 +1,12 @@
 ---
 - hosts: all
-  user: root
+  user: "{{ deploy_user }}"
+  sudo: true
   vars_files:
     - vars/defaults.yml
 
   roles:
-    #- deploy-user
-    - mysql
-    - ruby
+    #- mysql
+    #- ruby
+    #- chruby
     - nginx-puma
-
-  # handlers: 
-  #   - name: Restart puma
-  #     action: service name=puma state=restarted

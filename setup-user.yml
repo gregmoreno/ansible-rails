@@ -1,0 +1,22 @@
+---
+- hosts: all
+  user: root
+  vars_files:
+    - vars/defaults.yml
+
+  tasks:
+    - name: Add the deploy user
+      user: name={{ deploy_user }}
+            home=/home/{{ deploy_user }}
+            shell=/bin/bash
+            comment="Deploy User"
+            groups=sudo
+
+    - authorized_key: user={{ deploy_user }} key="{{ pubkey_path }}"
+
+    - name: Add user remote to sudoers
+      lineinfile:
+        "dest=/etc/sudoers
+        regexp='^{{ deploy_user }} ALL'
+        line='{{ deploy_user }} ALL=(ALL) NOPASSWD: ALL'
+        state=present"

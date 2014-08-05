@@ -1,5 +1,5 @@
-production:
-  adapter:  {{ database_adapter }}
+{{ rails_env }}:
+  adapter:  {{ db_adapter }}
   database: {{ db_name }}
   username: {{ db_user }}
   password: {{ db_password }}

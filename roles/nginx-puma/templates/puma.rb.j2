@@ -4,13 +4,13 @@ workers 2
 
 on_worker_boot do
   require "active_record"
-  cwd = File.dirname(__FILE__)+"/../.."
+  cwd = File.dirname(__FILE__)+"/.."
   ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
-  ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"] || YAML.load_file("#{cwd}/config/database.yml")["production"])
+  ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"] || YAML.load_file("#{cwd}/config/database.yml")["{{ rails_env }}"])
 end
 
 bind 'unix://{{deploy_directory}}/shared/tmp/sockets/puma.sock'
-environment 'production'
+environment '{{ rails_env }}'
 pidfile "{{deploy_directory}}/shared/tmp/puma.pid"
 state_path "{{deploy_directory}}/shared/tmp/sockets/puma.state"
 

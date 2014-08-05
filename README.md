@@ -13,7 +13,7 @@ It installs:
 
 To run:
 
-    $ ansible-playbook -i hosts app.yml --private-key ~/.ssh/soh-www
+    $ ansible-playbook -i hosts app.yml --private-key ~/.ssh/privkey
 
     $ ansible-playbook -i hosts app.yml -t ruby,deploy,postgresql,nginx
     $ <deploy your app>
