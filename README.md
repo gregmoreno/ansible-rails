@@ -1,10 +1,14 @@
-ssh-keyscan staging.steponehealth.com >> ~/.ssh/known_hosts
+Add url to known hosts
+
+```
+ssh-keyscan staging.app.com >> ~/.ssh/known_hosts
+```
 
 Assuming you still need to upload ssh key to the server and you have the root password
 
 ```
-scp ~/.ssh/id_rsa.pub root@staging.steponehealth.com:~/uploaded_key.pub
-ssh root@staging.steponehealth.com
+scp ~/.ssh/id_rsa.pub root@staging.app.com:~/uploaded_key.pub
+ssh root@staging.app.com
 mkdir -m og-rwx .ssh
 cat ~/uploaded_key.pub >> ~/.ssh/authorized_keys
 ```
