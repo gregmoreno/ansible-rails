@@ -1,18 +1,13 @@
 ssh-keyscan staging.steponehealth.com >> ~/.ssh/known_hosts
 
-# If you are running OSX, you need to do this:
-# http://thornelabs.net/2014/02/09/ansible-os-x-mavericks-you-must-install-the-sshpass-program.html
-# ansible-playbook -i hosts create-user.yml --user root --ask-pass
-
-
-# Assuming you still need to upload ssh key to the server and you have the root password
+// Assuming you still need to upload ssh key to the server and you have the root password
 scp ~/.ssh/id_rsa.pub root@staging.steponehealth.com:~/uploaded_key.pub
 ssh root@staging.steponehealth.com
 mkdir -m og-rwx .ssh
 cat ~/uploaded_key.pub >> ~/.ssh/authorized_keys
 
 
-# Create the user. We will not use root after this
+// Create the user. We will not use root after this
 ansible-playbook -i hosts create-user.yml --user root
 
 ansible-playbook -i hosts bootstrap.yml
