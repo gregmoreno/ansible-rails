@@ -1,0 +1,49 @@
+app_name: app
+rails_env: staging
+app_domain: staging.app.com
+deploy_directory: /var/www/staging.app
+deploy_user: deploy
+deploy_group: deploy
+
+db_name: soh_{{ rails_env }}
+db_user: user_{{ rails_env }}
+db_password: password
+db_adapter: mysql2
+
+mysql_service: mysql
+mysql_conf_dir: "/etc/mysql/"
+mysql_port: 3306
+mysql_bind_address: "0.0.0.0"
+mysql_root_db_pass: password
+mysql_db_id: 7
+mysql_db:
+ - name: "{{ db_name }}"
+   replicate: no
+mysql_users:
+ - name: "{{ db_user }}"
+   password: "{{ db_password }}"
+   host: localhost
+   priv: "*.*:ALL"
+mysql_repl_user:
+  - name: repl
+    password: password
+mysql_repl_role: master
+
+ruby_version: 2.1
+ruby_dev_version: 2.0
+rubies_dir: /opt/rubies
+
+ruby_install_src_dir: /usr/local/src
+ruby_install_version: 0.4.3
+ruby_install_archive: "{{ ruby_install_src_dir }}/ruby-install-{{ ruby_install_version }}.tar.gz"
+ruby_install_url: https://github.com/postmodern/ruby-install/archive/v{{ ruby_install_version }}.tar.gz
+ruby_install_src_path: "{{ ruby_install_src_dir }}/ruby-install-{{ ruby_install_version }}"
+
+chruby_src_dir: /usr/local/src
+chruby_version: 0.3.8
+chruby_archive: "{{ chruby_src_dir }}/chruby-{{ chruby_version }}.tar.gz"
+chruby_url: https://github.com/postmodern/chruby/archive/v{{chruby_version}}.tar.gz
+chruby_src_path: "{{ chruby_src_dir }}/chruby-{{ chruby_version}}"
+
+## deploy user
+pubkey_path: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
