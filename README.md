@@ -22,3 +22,4 @@ Sources:
 * https://github.com/jgrowl/ansible-playbook-ruby-from-src
 * https://github.com/bennojoy/mysql
 * http://thornelabs.net/2014/03/08/install-ansible-create-your-inventory-file-and-run-an-ansible-playbook-and-some-ansible-commands.html
+* https://github.com/radamanthus/ansible-rails
