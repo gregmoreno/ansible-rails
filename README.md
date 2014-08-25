@@ -8,8 +8,13 @@ cat ~/uploaded_key.pub >> ~/.ssh/authorized_keys
 
 Using ec2, create a group with Power role and add user to that group
 ```
+# Create the instance and add the IP to the 'hosts' file under 'launched' group
 AWS_ACCESS_KEY=access AWS_SECRET_KEY="secret" ansible-playbook -i hosts ec2.yml
+
+#  Create the 'deploy' (by default) user and your ssh key
 ansible-playbook -i hosts create-user.yml --user root --limit launched
+
+# From here on, it will use 'deploy' user
 ansible-playbook -i hosts bootstrap.yml --limit launched
 ```
 
