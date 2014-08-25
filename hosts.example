@@ -1,1 +1,11 @@
-162.243.123.190
+[local]
+localhost ansible_python_interpreter=/usr/local/bin/python
+
+[www]
+www.yourapp.com
+
+[staging]
+staging.yourapp.com
+
+[launched]
+# just created instances will be added here by ec2.yml

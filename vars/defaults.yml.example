@@ -1,37 +1,54 @@
-app_name: app
-rails_env: staging
-app_domain: staging.app.com
-deploy_directory: /var/www/staging.app
-deploy_user: deploy
-deploy_group: deploy
+rails:
+  env: staging
+  app: staging.yourapp
+  domains:
+  - staging.yourapp.com
 
-db_name: soh_{{ rails_env }}
-db_user: user_{{ rails_env }}
-db_password: password
-db_adapter: mysql2
+deploy:
+  directory: /var/www/{{ rails.app }}
+  user: deploy
+  group: deploy
 
-mysql_service: mysql
-mysql_conf_dir: "/etc/mysql/"
-mysql_port: 3306
-mysql_bind_address: "0.0.0.0"
-mysql_root_db_pass: password
-mysql_db_id: 7
-mysql_db:
- - name: "{{ db_name }}"
-   replicate: no
-mysql_users:
- - name: "{{ db_user }}"
-   password: "{{ db_password }}"
-   host: localhost
-   priv: "*.*:ALL"
-mysql_repl_user:
-  - name: repl
-    password: password
-mysql_repl_role: master
+db:
+  name: yourapp
+  user: yourapp
+  password: userpassword
+  adapter: mysql2
 
-ruby_version: 2.1
-ruby_dev_version: 2.0
-rubies_dir: /opt/rubies
+mysql:
+  service: mysql
+  conf_dir: "/etc/mysql/"
+  port: 3306
+  bind_address: "0.0.0.0"
+  root_db_pass: rootpassword
+
+  db_id: 7
+  db:
+   - name: "{{ db.name }}"
+     replicate: no
+  users:
+   - name: "{{ db.user }}"
+     password: "{{ db.password }}"
+     host: localhost
+     priv: "*.*:ALL"
+  repl_user:
+   - name: repl
+     password: replpassword
+  repl_role: master
+
+redis:
+  service: redis-server
+
+puma:
+  service: puma-manager
+
+nginx:
+  service: nginx
+
+ruby:
+  version: 2.1.2
+  dev_version: 2.0
+  rubies_dir: /opt/rubies
 
 ruby_install_src_dir: /usr/local/src
 ruby_install_version: 0.4.3
@@ -47,3 +64,19 @@ chruby_src_path: "{{ chruby_src_dir }}/chruby-{{ chruby_version}}"
 
 ## deploy user
 pubkey_path: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+swap:
+  file_path: /swapfile
+  file_size_mb: 1024
+
+ec2_keypair: yourapp-www
+ec2_instance_type: t1.micro
+ec2_security_group: web-security-group
+ec2_region: us-west-1
+ec2_zone: us-west-1c
+ec2_image: ami-f1fdfeb4 # Ubuntu Server 14.04 LTS (PV) 64-bit
+ec2_instance_count: 1
+
+# NOTE: Works only in VPC
+#ec2_instance_type: t2.micro
+#ec2_image: ami-a7fdfee2 # Ubuntu Server 14.04 LTS (HVM), SSD Volume Type
