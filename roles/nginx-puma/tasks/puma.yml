@@ -11,12 +11,12 @@
   tags: puma
 
 - name: Add puma shared/config
-  template: src=puma.rb.j2 dest={{deploy_directory}}/shared/config/puma.rb force=yes mode=755 owner=deploy group=deploy
+  template: src=puma.rb.j2 dest={{deploy.directory}}/shared/config/puma.rb force=yes mode=755 owner={{deploy.user}} group={{deploy.group}}
   tags: puma
 
 - name: Make shared/tmp/sockets
-  file: path={{deploy_directory}}/shared/tmp/sockets group=deploy owner=deploy state=directory
+  file: path={{deploy.directory}}/shared/tmp/sockets state=directory owner={{deploy.user}} group={{deploy.group}}
   tags: tmp
 
 - name: Restart puma-manager
-  action: service name=puma-manager state=restarted
+  action: service name={{puma.service}} state=restarted
