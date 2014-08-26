@@ -18,7 +18,7 @@
    - localhost
 
 - name: copy .my.cnf file with root password credentials
-  template: src=.my.cnf.j2 dest=~/.my.cnf mode=0600
+  template: src=dot.my.cnf.j2 dest=~/.my.cnf mode=0600
 
 - name: ensure anonymous users are not in the database
   mysql_user: name='' host={{ item }} state=absent
