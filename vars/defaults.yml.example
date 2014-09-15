@@ -13,7 +13,8 @@ db:
   name: yourapp
   user: yourapp
   password: userpassword
-  adapter: mysql2
+  adapter:  mysql2
+  pool:    16 # puma - 16, default - 5
 
 mysql:
   service: mysql

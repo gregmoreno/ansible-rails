@@ -1,21 +1,25 @@
+
+
+Using ec2, create a group with Power role and add user to that group. Note ec2.yml will update hosts
+```
+AWS_ACCESS_KEY=access AWS_SECRET_KEY="secret" ansible-playbook -i hosts ec2.yml
+ansible-playbook -i hosts create-user.yml --user root --limit launched
+ansible-playbook -i hosts bootstrap.yml --limit launched
+```
+
+If you are not using ec2, make sure you have access to server first.
 Assuming you still need to upload ssh key to the server and you have the root password
 ```
-scp ~/.ssh/id_rsa.pub root@staging.app.com:~/uploaded_key.pub
+scp ~/.ssh/id_rsa.pub root@app.com:~/uploaded_key.pub
 ssh root@staging.app.com
 mkdir -m og-rwx .ssh
 cat ~/uploaded_key.pub >> ~/.ssh/authorized_keys
 ```
 
-Using ec2, create a group with Power role and add user to that group
+Update hosts file to change the domain or IP under www
 ```
-# Create the instance and add the IP to the 'hosts' file under 'launched' group
-AWS_ACCESS_KEY=access AWS_SECRET_KEY="secret" ansible-playbook -i hosts ec2.yml
-
-#  Create the 'deploy' (by default) user and your ssh key
-ansible-playbook -i hosts create-user.yml --user root --limit launched
-
-# From here on, it will use 'deploy' user
-ansible-playbook -i hosts bootstrap.yml --limit launched
+ansible-playbook -i hosts create-user.yml --user root --limit www
+ansible-playbook -i hosts bootstrap.yml --limit www
 ```
 
 
